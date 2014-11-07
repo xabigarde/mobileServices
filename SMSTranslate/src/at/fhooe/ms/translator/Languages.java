@@ -9,11 +9,11 @@ package at.fhooe.ms.translator;
  */
 public class Languages {
 	
-	public static final int ENGLISH=1;
-	public static final int GERMAN=2;
-	public static final int FRENCH=3;
-	public static final int SPANISH=4;
-	public static final int RUSSIAN=5;
+	public static final String ENGLISH="en";
+	public static final String GERMAN="de";
+	public static final String FRENCH="fr";
+	public static final String SPANISH="es";
+	public static final String RUSSIAN="ru";
 	
 	
 }

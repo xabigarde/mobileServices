@@ -20,7 +20,7 @@ public class Translator extends Observable{
 	//private static final String YANDEX_USER="mcm.mobileservices:smstranslate";
 	private static final String YANDEX_KEY = "key=trnsl.1.1.20141106T000651Z.ba863ed5d1024604.bbdd558221c6c57887254d9d2cbe6054b0e7cc5a";
 	private static final String YANDEX_URL_FIRST_PART="https://translate.yandex.net/api/v1.5/tr.json/translate?";
-	private static final String YANDEX_LANGUAGE="&lang=en-de";
+	private static final String YANDEX_LANGUAGE="&lang=";
 	private static final String YANDEX_TEXT="&text=";
 	private Context mContext;
 	private String mTranslatedText;
@@ -34,11 +34,12 @@ public class Translator extends Observable{
 	/**
 	 * Creates the Web-URL for the JSON Request and sends it to the YANDEX-Server
 	 * @param _textInput
-	 * @return the m_translatedText
+	 * @param _inputLanguage
+	 * @param _outputLanguage
 	 */
-	public void translate(String _textInput, int _origLanguage, int _targetLanguage){
+	public void translate(String _textInput, String _inputLanguage, String _outputLanguage){
 		
-		String address=buildAddress(_textInput, _origLanguage, _targetLanguage );
+		String address=buildAddress(_textInput, _inputLanguage, _outputLanguage );
 		sendText(address);
 		
 	}
@@ -53,13 +54,15 @@ public class Translator extends Observable{
 			@Override
 			public void onResponse(JSONObject _response) {
 				try {
-					setTranslatedText(_response.getString("text"));
+					String a= _response.getString("text").replace("[\"", "");
+					String b= a.replace("\"]", "");
+					setTranslatedText(b);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
 				setChanged();
 				notifyObservers(mTranslatedText);
+				
 			}
 
 		}, new Response.ErrorListener() {
@@ -78,11 +81,11 @@ public class Translator extends Observable{
 	/**
 	 * Builds the http request url.
 	 * @param _textInput the text to translate
-	 * @param _origLanguage original language
-	 * @param _targetLanguage target language
+	 * @param english original language
+	 * @param german target language
 	 */
-	private String buildAddress(String _textInput, int _origLanguage,
-			int _targetLanguage) {
+	private String buildAddress(String _textInput, String _input,
+			String _output) {
 		
 		String[] formatedTextArray=_textInput.split(" ");
 		String formatedText="";
@@ -93,7 +96,7 @@ public class Translator extends Observable{
 			}
 			formatedText+=formatedTextArray[i];
 		}
-		String address=YANDEX_URL_FIRST_PART+YANDEX_KEY+YANDEX_LANGUAGE+YANDEX_TEXT+formatedText;
+		String address=YANDEX_URL_FIRST_PART+YANDEX_KEY+YANDEX_LANGUAGE+_input+"-"+_output +YANDEX_TEXT+formatedText;
 			return address; 
 	}
 
@@ -105,10 +108,10 @@ public class Translator extends Observable{
 	}
 
 	/**
-	 * @param translatedText the translatedText to set
+	 * @param _translatedText the translatedText to set
 	 */
-	public void setTranslatedText(String translatedText) {
-		this.mTranslatedText = translatedText;
+	public void setTranslatedText(String _translatedText) {
+		this.mTranslatedText = _translatedText;
 	}
 	
 }
