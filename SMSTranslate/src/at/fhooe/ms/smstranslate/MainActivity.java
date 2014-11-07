@@ -1,18 +1,31 @@
 package at.fhooe.ms.smstranslate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 //import at.fhooe.mcm.smstranslate.R;
 
 public class MainActivity extends Activity {
 
-	@Override
+	Button mGoToTranslatorButton;
+	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mGoToTranslatorButton= (Button) findViewById(R.id.button_to_translation);
+		mGoToTranslatorButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.this.startActivity(new Intent(MainActivity.this, DummyTranslatorActivity.class));
+			}
+		});
 	}
 
 	@Override

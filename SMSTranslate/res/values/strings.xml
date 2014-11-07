@@ -3,7 +3,11 @@
 
     <string name="app_name">SMSTranslate</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="entry_field_label">Type in the Text to translate</string>
+    <string name="output_field_label">Result</string>
     <string name="action_settings">Settings</string>
-
+    <string name="title_activity_dummy_translator">DummyTranslator</string>
+    <string name="text_to_translate">Text to translate:</string>
+    <string name="go_to_translator_button">goto translator</string>
+ 
 </resources>
