@@ -4,6 +4,12 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_SMS" />
+	<uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-sdk
         android:minSdkVersion="10"
@@ -16,22 +22,29 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
         >
+        
+        <receiver android:name="at.fhooe.ms.smsreceivetest.IncomingSms">   
+	     <intent-filter>
+	         <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+	     </intent-filter>
+	 	</receiver>
+ 	
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
+        </activity>
+        
+        <activity
+            android:name=".DummyTranslatorActivity"
+            android:label="@string/title_activity_dummy_translator">
+        </activity>
+        
+        <activity android:name="at.fhooe.ms.ftpuploadtest.FtpUpload">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".DummyTranslatorActivity"
-            android:label="@string/title_activity_dummy_translator"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="at.fhooe.ms.smstranslate.MainActivity" />
         </activity>
     </application>
 
