@@ -21,6 +21,7 @@ import android.widget.TextView;
 import at.fhooe.ms.smstranslate.R;
 import at.fhooe.ms.translator.Languages;
 import at.fhooe.ms.translator.Translator;
+import at.fhooe.ms.voice.VoiceConverter;
 
 public class SMSReceiveActivity extends Activity implements OnClickListener,
 		Observer {
@@ -32,6 +33,7 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 	private Translator translator;
 
 	private String lastReceivedMessage;
+	private String lastTranslatedMessage;
 
 	private AlertDialog waitDialog = null;
 
@@ -193,8 +195,13 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 					chosenLang);
 			break;
 		case R.id.btnHearIt:
-
+			
 			// TODO: call the generateXML + call initiation
+			//VoiceConverter.HearIt(this, lastTranslatedMessage);
+			
+			String _inString = "Hello, this is a test case that should be working."; 
+			VoiceConverter.HearIt(this, _inString);
+			
 			break;
 		}
 

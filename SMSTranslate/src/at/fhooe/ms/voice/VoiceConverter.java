@@ -4,30 +4,36 @@
 package at.fhooe.ms.voice;
 
 import android.content.Context;
+import at.fhooe.ms.ftpuploadtest.FTP;
 
 /**
- * 
+ * This class acts as an interface for:
+ * -generating VXML files, 
+ * -uploading them to the Voxeo FTP server, and
+ * -making/establishing a voice call with the Voxeo server 
  * 
  * @author Xabi
  *
  */
 public class VoiceConverter {
 	
-	private Context m_context;
+	private static Context m_context;
 	
-	public VoiceConverter(Context _context){
+	public static void HearIt(Context _context, String _inString){
 		m_context =_context;
-	}
-
-	public void generateVXML(String _inString){
 		
+		uploadToFTPServer();
+		
+		makeAudioCall();
 	}
 	
-	public void uploadToFTPServer(){
+	private static void uploadToFTPServer(){
+		FTP ftp = new FTP(m_context);
 		
+		ftp.uploadFile();
 	}
 	
-	public void makeAudioCall(){
+	private static void makeAudioCall(){
 		
 	}
 	
