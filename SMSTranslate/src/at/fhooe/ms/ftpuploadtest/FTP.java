@@ -14,6 +14,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +24,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import at.fhooe.ms.smstranslate.R;
 
-public class FTP extends Activity implements OnClickListener {
+public class FTP {
 	
 	private static final String TAG = "FTP_ACTIVITY";
 
-	/**					remote FTP Server name		 */
+	/*********** remote FTP Server name	********* */
 	static final String FTP_HOST_NAME = "ftp.voxeo.net";
 	
 	/********* work only for Dedicated IP ***********/
@@ -39,8 +40,13 @@ public class FTP extends Activity implements OnClickListener {
 	/********* FTP PASSWORD ***********/
 	static final String FTP_PASS = "rabbit.flesh27";
 	
-	static final String FTP_WORKING_DIRECTORY = "root/www";
+	/********** working directory in the remote server **********/
+	static final String FTP_WORKING_DIRECTORY = "/root/www";
 
+	/** Context from main activity*/
+	private Context m_context;
+
+/*
 	Button btn;
 
 	@Override
@@ -54,25 +60,43 @@ public class FTP extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-
-		
+		//Call async task to upload the file
 		try {
-			//System.out.println(">>Trying to create test.xml");
-			//File f = new File("test.xml");
-			//System.out.println("created?: " + f.createNewFile());
-			
-			System.out.println(">>Callin async task");
 			AsyncTask<URL, Integer, Boolean> asyncTask = new FTPUploadTask();
 			asyncTask.execute();
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// FTPUploadTask uploadTask = new FTPUploadTask();
-		// uploadTask.execute();
-
+	}
+*/
+	
+	public FTP(Context _c){
+		
+		m_context = _c;
+		
+	}
+	
+	/**
+	 * Uploads 
+	 * @return True if there were no problems during FTP file upload
+	 */
+	public boolean uploadFile(){
+		boolean result = false;
+		
+		//TODO 1) Generate XML file
+		
+		//TODO 2) upload XML file
+		
+		try {
+			AsyncTask<URL, Integer, Boolean> asyncTask = new FTPUploadTask();
+			asyncTask.execute();
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	private void uploadFile(InputStream _is){
@@ -84,7 +108,7 @@ public class FTP extends Activity implements OnClickListener {
 		    boolean connected = ftpClient.login(FTP_USER, FTP_PASS);
 		    
 		    if(connected)
-		    	System.out.println(">>Connected!");
+		    	System.out.println(">>Remote FTP server successfully connected!");
 		    
 		    ftpClient.changeWorkingDirectory(FTP_WORKING_DIRECTORY);
 
@@ -100,12 +124,17 @@ public class FTP extends Activity implements OnClickListener {
 		        //boolean result = ftpClient.storeFile(localAsset.getFileName(), progressInput);
 		        System.out.println("Uploading kk file");
 		        boolean result = ftpClient.storeFile("kk.txt", _is);
-		        System.out.println(">>Success storing file? "+result);
+		        if(result)
+		        	System.out.println(">>The file was successfully uploaded to the FTP server");
+		        else
+		        	System.out.println(">>There was an error while uploading the file to the FTP server");
+		        
 		        buffIn.close();
 		        ftpClient.logout();
 		        ftpClient.disconnect();
+		        
 		    } else {
-		    	System.out.println(">>Connection seems to have failed");
+		    	System.out.println(">>Connection with the FTP server has failed");
 		    }
 
 		} catch (SocketException e) {
@@ -114,6 +143,31 @@ public class FTP extends Activity implements OnClickListener {
 		    Log.e(TAG, e.getStackTrace().toString());
 		} catch (IOException e) {
 		    Log.e(TAG, e.getStackTrace().toString());
+		}
+	}
+	
+	private class FTPUploadTask extends AsyncTask<URL, Integer, Boolean> {
+		// Do the long-running work in here
+		protected Boolean doInBackground(URL... urls) {
+			System.out.println(">>test doInBackground");
+
+			// final File f = new File("/vxml/reco.xml");
+
+			InputStream is = m_context.getResources().openRawResource(R.raw.reco); //upload dummy XML file
+
+			uploadFile(is);
+
+			return false;
+		}
+
+		// This is called each time you call publishProgress()
+		protected void onProgressUpdate(Integer... progress) {
+
+		}
+
+		// This is called when doInBackground() is finished
+		protected void onPostExecute(Long result) {
+
 		}
 	}
 
@@ -195,29 +249,6 @@ public class FTP extends Activity implements OnClickListener {
 
 	}
 */
-	private class FTPUploadTask extends AsyncTask<URL, Integer, Boolean> {
-		// Do the long-running work in here
-		protected Boolean doInBackground(URL... urls) {
-			System.out.println(">>test doInBackground");
 
-			// final File f = new File("/vxml/reco.xml");
-
-			InputStream is = getResources().openRawResource(R.raw.reco); //upload dummy XML file
-
-			uploadFile(is);
-
-			return false;
-		}
-
-		// This is called each time you call publishProgress()
-		protected void onProgressUpdate(Integer... progress) {
-
-		}
-
-		// This is called when doInBackground() is finished
-		protected void onPostExecute(Long result) {
-
-		}
-	}
 
 }
