@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +35,8 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 	private String lastReceivedMessage;
 	private String lastTranslatedMessage;
 
+	private AlertDialog waitDialog = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,12 +50,28 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 
 		tvSmsText = (TextView) findViewById(R.id.txtReceivedSMS);
 
+		createWaitDialog();
+
 		Log.i("smsreceive", "onCreate");
 
 		translator = new Translator(this);
 		translator.addObserver(this);
 
 		onSmsReceive(getIntent());
+	}
+
+	private void createWaitDialog() {
+		// Use the Builder class for convenient dialog construction
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Please wait while your SMS is translated...")
+				.setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.dismiss();
+							}
+						});
+		// Create the AlertDialog object and return it
+		waitDialog = builder.create();
 	}
 
 	@Override
@@ -67,7 +87,11 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 	 * @param i
 	 */
 	private void onSmsReceive(Intent intent) {
-		// Retrieves a map of extended data from the intent.
+		if (intent == null || intent.getExtras() == null
+				|| !intent.getExtras().containsKey("smsbundle")) {
+			return;
+		}
+
 		final Bundle bundle = intent.getExtras().getBundle("smsbundle");
 
 		try {
@@ -86,6 +110,8 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 					String senderNum = phoneNumber;
 					lastReceivedMessage = currentMessage
 							.getDisplayMessageBody();
+
+					tvSmsText.setText(lastReceivedMessage);
 
 					Log.i("SmsReceiver", "senderNum: " + senderNum
 							+ "; message: " + lastReceivedMessage);
@@ -137,7 +163,7 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.btnTranslate:
 
-			showTranslationWaitScreen();
+			setTranslationWaitDialogVisible(true);
 
 			SharedPreferences pref = PreferenceManager
 					.getDefaultSharedPreferences(this);
@@ -184,8 +210,15 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 	/**
 	 * 
 	 */
-	private void showTranslationWaitScreen() {
+	private void setTranslationWaitDialogVisible(boolean _visible) {
+		if (waitDialog != null) {
+			if (_visible) {
+				waitDialog.show();
+			} else {
+				waitDialog.dismiss();
+			}
 
+		}
 	}
 
 	/*
@@ -196,6 +229,8 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 	@Override
 	public void update(Observable arg0, Object data) {
 		Log.i("smsreceive", "update of observer: " + data.toString());
+
+		setTranslationWaitDialogVisible(false);
 
 		tvSmsText.setText(data.toString());
 
