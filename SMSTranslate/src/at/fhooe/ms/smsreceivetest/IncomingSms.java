@@ -11,6 +11,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
+import at.fhooe.ms.gui.SMSReceiveActivity;
 
 public class IncomingSms extends BroadcastReceiver {
 
@@ -46,6 +47,12 @@ public class IncomingSms extends BroadcastReceiver {
 					Toast toast = Toast.makeText(context, "senderNum: "
 							+ senderNum + ", message: " + message, duration);
 					toast.show();
+
+					Intent newIntent = new Intent(context,
+							SMSReceiveActivity.class);
+					newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					newIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					context.startActivity(newIntent);
 
 				} // end for loop
 			} // bundle is null

@@ -4,47 +4,58 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
-	<uses-permission android:name="android.permission.READ_SMS" />
-	<uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="13" 
-        />
+        android:targetSdkVersion="13" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" 
-        >
-        
-        <receiver android:name="at.fhooe.ms.smsreceivetest.IncomingSms">   
-	     <intent-filter>
-	         <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-	     </intent-filter>
-	 	</receiver>
- 	
+        android:theme="@style/AppTheme" >
+        <receiver android:name="at.fhooe.ms.smsreceivetest.IncomingSms" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
         <activity
-            android:name=".MainActivity"
+            android:name="at.fhooe.ms.gui.MainActivity"
             android:label="@string/title_activity_main" >
-        </activity>
-        
-        <activity
-            android:name=".DummyTranslatorActivity"
-            android:label="@string/title_activity_dummy_translator">
-        </activity>
-        
-        <activity android:name="at.fhooe.ms.ftpuploadtest.FtpUpload">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="at.fhooe.ms.smstranslate.DummyTranslatorActivity"
+            android:label="@string/title_activity_dummy_translator" >
+        </activity>
+        <activity android:name="at.fhooe.ms.ftpuploadtest.FtpUpload" >
+        </activity>
+        <activity
+            android:name="at.fhooe.ms.gui.SMSTransmitActivity"
+            android:label="@string/title_activity_smstransmit" >
+        </activity>
+        <activity
+            android:name="at.fhooe.ms.gui.SMSReceiveActivity"
+            android:label="@string/title_activity_smsreceive" >
+        </activity>
+        <activity
+            android:name="at.fhooe.ms.gui.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

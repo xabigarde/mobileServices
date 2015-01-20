@@ -6,20 +6,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".SMSReceiveActivity" >
 
-    <Button 
-        android:id="@+id/btnWriteSMS"
+    <TextView
+        android:id="@+id/txtReceivedSMS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Write SMS"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:text="here is the text of the received sms." />
     
-    <Button 
-        android:id="@+id/btnReadSMS"
+    <Button
+        android:id="@+id/btnHearIt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Read SMS"
-        android:layout_below="@id/btnWriteSMS" />
+        android:text="Hear It"
+        android:layout_alignParentBottom="true" />
+    
+    <Button
+        android:id="@+id/btnTranslate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Translate"
+        android:layout_above="@id/btnHearIt" />
+    
+    
 
 </RelativeLayout>
