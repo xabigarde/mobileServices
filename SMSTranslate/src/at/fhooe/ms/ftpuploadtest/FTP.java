@@ -42,6 +42,9 @@ public class FTP {
 	
 	/********** working directory in the remote server **********/
 	static final String FTP_WORKING_DIRECTORY = "/root/www";
+	
+	/** VXML file to be uploaded*/
+	static final String VXML_FILE = "textToSpeech.xml";
 
 	/** Context from main activity*/
 	private Context m_context;
@@ -72,10 +75,12 @@ public class FTP {
 	}
 */
 	
+	/**
+	 * Constructor
+	 * @param _c Context of the main Activity
+	 */
 	public FTP(Context _c){
-		
 		m_context = _c;
-		
 	}
 	
 	/**
@@ -84,11 +89,7 @@ public class FTP {
 	 */
 	public boolean uploadFile(){
 		boolean result = false;
-		
-		//TODO 1) Generate XML file
-		
-		//TODO 2) upload XML file
-		
+
 		try {
 			AsyncTask<URL, Integer, Boolean> asyncTask = new FTPUploadTask();
 			asyncTask.execute();
@@ -122,8 +123,8 @@ public class FTP {
 		        //ProgressInputStream progressInput = new ProgressInputStream(buffIn, progressHandler);
 
 		        //boolean result = ftpClient.storeFile(localAsset.getFileName(), progressInput);
-		        System.out.println("Uploading kk file");
-		        boolean result = ftpClient.storeFile("kk.txt", _is);
+		        System.out.println("Uploading file "+VXML_FILE);
+		        boolean result = ftpClient.storeFile(VXML_FILE, _is);
 		        if(result)
 		        	System.out.println(">>The file was successfully uploaded to the FTP server");
 		        else

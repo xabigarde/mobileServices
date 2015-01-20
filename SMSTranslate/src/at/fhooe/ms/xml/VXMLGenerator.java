@@ -25,7 +25,7 @@ public class VXMLGenerator {
 
 	// Externalize variables for performance
 	private final File ROOT_DIR = new File(Environment.getExternalStorageDirectory() + File.separator + "SMStranslator");
-	private final String FILE_NAME = "translated_SMS.xml";
+	private final String FILE_NAME = "textToSpeech.xml";
 
 	private File m_VXML_File;
 	private BufferedWriter buf;
