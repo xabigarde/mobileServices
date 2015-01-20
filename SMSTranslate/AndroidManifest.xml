@@ -33,16 +33,23 @@
         <activity
             android:name="at.fhooe.ms.gui.MainActivity"
             android:label="@string/title_activity_main" >
-            <intent-filter>
+            
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
-            android:name="at.fhooe.ms.smstranslate.DummyTranslatorActivity"
-            android:label="@string/title_activity_dummy_translator" >
+            android:name=".DummyTranslatorActivity"
+            android:label="@string/title_activity_dummy_translator">
         </activity>
+        
+        <activity android:name="at.fhooe.ms.ftpuploadtest.FTP">
+
+        </activity>
+
         <activity android:name="at.fhooe.ms.ftpuploadtest.FtpUpload" >
         </activity>
         <activity
@@ -57,6 +64,14 @@
             android:name="at.fhooe.ms.gui.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        
+<!--         <activity android:name="at.fhooe.ms.ftpuploadtest.FtpUpload">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> -->
     </application>
 
 </manifest>

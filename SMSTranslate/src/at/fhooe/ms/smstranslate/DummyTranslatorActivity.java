@@ -27,9 +27,9 @@ public class DummyTranslatorActivity extends Activity implements Observer {
 		setContentView(R.layout.activity_dummy_translator);
 		setTranslator();
 		setUI();
-		
+		 
 	}
-
+ 
 	/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class DummyTranslatorActivity extends Activity implements Observer {
 			
 			@Override
 			public void onClick(View v) {
-				mTranslator.translate(mInputText.getText().toString(), Languages.ENGLISH, Languages.GERMAN);
+				mTranslator.translate(mInputText.getText().toString(), Languages.AUTOMATIC, Languages.GERMAN);
 			}
 		});
 		
