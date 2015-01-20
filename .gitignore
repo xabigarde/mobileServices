@@ -74,3 +74,4 @@ strings_dev.xml
 # Butterknife
 .apt_generated
 
+.properties
