@@ -6,8 +6,6 @@ package at.fhooe.ms.ftpuploadtest;
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -45,10 +43,17 @@ public class FtpUpload extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 
-		File f = new File("test.xml");
+		
 		try {
-			System.out.println("created?: " + f.createNewFile());
-		} catch (IOException e) {
+			//System.out.println(">>Trying to create test.xml");
+			//File f = new File("test.xml");
+			//System.out.println("created?: " + f.createNewFile());
+			
+			System.out.println(">>Callin async task");
+			AsyncTask<URL, Integer, Boolean> asyncTask = new FTPUploadTask();
+			asyncTask.execute();
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -142,7 +147,7 @@ public class FtpUpload extends Activity implements OnClickListener {
 
 			// final File f = new File("/vxml/reco.xml");
 
-			InputStream is = getResources().openRawResource(R.raw.reco);
+			InputStream is = getResources().openRawResource(R.raw.reco); //upload dummy XML file
 
 			uploadFile(is);
 
