@@ -3,16 +3,20 @@ package at.fhooe.ms.gui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import at.fhooe.ms.smstranslate.R;
 
 public class SMSTransmitActivity extends Activity implements OnClickListener {
 
 	private Button btnTransmit;
+	private EditText etRecipient;
+	private EditText etMessage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,9 @@ public class SMSTransmitActivity extends Activity implements OnClickListener {
 
 		btnTransmit = (Button) findViewById(R.id.btnTransmit);
 		btnTransmit.setOnClickListener(this);
+
+		etRecipient = (EditText) findViewById(R.id.etRecipientNumber);
+		etMessage = (EditText) findViewById(R.id.etSMSText);
 	}
 
 	@Override
@@ -52,9 +59,20 @@ public class SMSTransmitActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btnTransmit:
+
+			String recipient = etRecipient.getText().toString();
+			String message = etMessage.getText().toString();
+
+			sendSMS(recipient, message);
+
 			break;
 		}
 
+	}
+
+	private void sendSMS(String phoneNumber, String message) {
+		SmsManager sms = SmsManager.getDefault();
+		sms.sendTextMessage(phoneNumber, null, message, null, null);
 	}
 
 }
