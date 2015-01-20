@@ -21,7 +21,7 @@ public class PhoneCall {
 		m_context = _context;
 	}
 	
-	private void makeCall(){
+	public void makeCall(){
 		Intent intent = new Intent(Intent.ACTION_CALL);
 
 		//intent.setData(Uri.parse("tel:" + bundle.getString("mobilePhone")));

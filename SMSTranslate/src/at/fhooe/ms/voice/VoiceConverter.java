@@ -4,7 +4,6 @@
 package at.fhooe.ms.voice;
 
 import android.content.Context;
-import at.fhooe.ms.ftpuploadtest.FTP;
 
 /**
  * This class acts as an interface for:
@@ -22,6 +21,9 @@ public class VoiceConverter {
 	public static void HearIt(Context _context, String _inString){
 		m_context =_context;
 		
+		VXMLGenerator gen = new VXMLGenerator();
+		gen.generateFile(_inString);
+		
 		uploadToFTPServer();
 		
 		makeAudioCall();
@@ -34,7 +36,8 @@ public class VoiceConverter {
 	}
 	
 	private static void makeAudioCall(){
-		
+		PhoneCall phone = new PhoneCall(m_context);
+		phone.makeCall();
 	}
 	
 }

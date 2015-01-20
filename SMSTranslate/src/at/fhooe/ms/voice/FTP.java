@@ -1,15 +1,19 @@
 /**
  * 
  */
-package at.fhooe.ms.ftpuploadtest;
+package at.fhooe.ms.voice;
 
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 
@@ -41,10 +45,7 @@ public class FTP {
 	static final String FTP_PASS = "rabbit.flesh27";
 	
 	/********** working directory in the remote server **********/
-	static final String FTP_WORKING_DIRECTORY = "/root/www";
-	
-	/** VXML file to be uploaded*/
-	static final String VXML_FILE = "textToSpeech.xml";
+	static final String FTP_WORKING_DIRECTORY = "/www";
 
 	/** Context from main activity*/
 	private Context m_context;
@@ -123,8 +124,8 @@ public class FTP {
 		        //ProgressInputStream progressInput = new ProgressInputStream(buffIn, progressHandler);
 
 		        //boolean result = ftpClient.storeFile(localAsset.getFileName(), progressInput);
-		        System.out.println("Uploading file "+VXML_FILE);
-		        boolean result = ftpClient.storeFile(VXML_FILE, _is);
+		        System.out.println("Uploading file "+VXMLGenerator.FILE_NAME);
+		        boolean result = ftpClient.storeFile(VXMLGenerator.FILE_NAME, _is);
 		        if(result)
 		        	System.out.println(">>The file was successfully uploaded to the FTP server");
 		        else
@@ -139,11 +140,11 @@ public class FTP {
 		    }
 
 		} catch (SocketException e) {
-		    Log.e(TAG, e.getStackTrace().toString());
+			e.printStackTrace();
 		} catch (UnknownHostException e) {
-		    Log.e(TAG, e.getStackTrace().toString());
+			e.printStackTrace();
 		} catch (IOException e) {
-		    Log.e(TAG, e.getStackTrace().toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -154,10 +155,17 @@ public class FTP {
 
 			// final File f = new File("/vxml/reco.xml");
 
-			InputStream is = m_context.getResources().openRawResource(R.raw.reco); //upload dummy XML file
-
-			uploadFile(is);
-
+			//InputStream is = m_context.getResources().openRawResource(R.raw.reco); //upload dummy XML file
+			//URI filePath = new URI(VXMLGenerator.ROOT_DIR.getAbsolutePath()+VXMLGenerator.FILE_NAME);
+			File file = new File(VXMLGenerator.ROOT_DIR.getAbsolutePath()+File.separator+VXMLGenerator.FILE_NAME);
+			try {
+				FileInputStream fileInputStream = new FileInputStream(file);
+				
+				uploadFile(fileInputStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return false;
 		}
 

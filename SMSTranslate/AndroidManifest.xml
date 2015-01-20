@@ -47,7 +47,7 @@
             android:label="@string/title_activity_dummy_translator">
         </activity>
         
-        <activity android:name="at.fhooe.ms.ftpuploadtest.FTP">
+        <activity android:name="at.fhooe.ms.voice.FTP">
 
         </activity>
 

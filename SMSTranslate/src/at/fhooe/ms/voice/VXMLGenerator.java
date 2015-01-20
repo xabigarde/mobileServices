@@ -1,7 +1,7 @@
 /**
  * 
  */
-package at.fhooe.ms.xml;
+package at.fhooe.ms.voice;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,8 +24,8 @@ public class VXMLGenerator {
 	private Context m_context;
 
 	// Externalize variables for performance
-	private final File ROOT_DIR = new File(Environment.getExternalStorageDirectory() + File.separator + "SMStranslator");
-	private final String FILE_NAME = "textToSpeech.xml";
+	public static final File ROOT_DIR = new File(Environment.getExternalStorageDirectory() + File.separator + "SMStranslator");
+	public static final String FILE_NAME = "textToSpeech.xml";
 
 	private File m_VXML_File;
 	private BufferedWriter buf;
