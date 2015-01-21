@@ -196,11 +196,9 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 			break;
 		case R.id.btnHearIt:
 			
-			// TODO: call the generateXML + call initiation
-			//VoiceConverter.HearIt(this, lastTranslatedMessage);
-			
-			String _inString = "Hello, this is a test case that should be working."; 
-			VoiceConverter.HearIt(this, _inString);
+			//TODO: initialize "lastTranslatedMessage"
+			String _inString = "Hello, this is a test case that should be working."; //TODO: delete this line
+			VoiceConverter.HearIt(this, lastTranslatedMessage);
 			
 			break;
 		}

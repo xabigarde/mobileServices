@@ -25,7 +25,7 @@ public class PhoneCall {
 		Intent intent = new Intent(Intent.ACTION_CALL);
 
 		//intent.setData(Uri.parse("tel:" + bundle.getString("mobilePhone")));
-		intent.setData(Uri.parse(VOXEO_TELEPHONE));
+		intent.setData(Uri.parse("tel:"+VOXEO_TELEPHONE));
 		
 		m_context.startActivity(intent);
 	}
