@@ -192,13 +192,12 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 			}
 
 			translator.translate(lastReceivedMessage, Languages.AUTOMATIC,
-					chosenLang);
+					chosenLang);		
+			
 			break;
 		case R.id.btnHearIt:
 			
-			//TODO: initialize "lastTranslatedMessage"
-			String _inString = "Hello, this is a test case that should be working."; //TODO: delete this line
-			VoiceConverter.HearIt(this, lastTranslatedMessage);
+			VoiceConverter.makeAudioCall();
 			
 			break;
 		}
@@ -215,7 +214,6 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 			} else {
 				waitDialog.dismiss();
 			}
-
 		}
 	}
 
@@ -231,6 +229,12 @@ public class SMSReceiveActivity extends Activity implements OnClickListener,
 		setTranslationWaitDialogVisible(false);
 
 		tvSmsText.setText(data.toString());
+		
+		lastTranslatedMessage = data.toString();
+		
+		// generate and upload VXML file as soon as possible 
+		// so that it is available in the server by the time the call is made
+		VoiceConverter.generateAndUploadVXML(this, lastTranslatedMessage);
 
 	}
 }

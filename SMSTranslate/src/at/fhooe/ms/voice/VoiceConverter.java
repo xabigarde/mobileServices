@@ -18,15 +18,13 @@ public class VoiceConverter {
 	
 	private static Context m_context;
 	
-	public static void HearIt(Context _context, String _inString){
+	public static void generateAndUploadVXML(Context _context, String _inString){
 		m_context =_context;
 		
 		VXMLGenerator gen = new VXMLGenerator();
 		gen.generateFile(_inString);
 		
 		uploadToFTPServer();
-		
-		makeAudioCall();
 	}
 	
 	private static void uploadToFTPServer(){
@@ -35,7 +33,7 @@ public class VoiceConverter {
 		ftp.uploadFile();
 	}
 	
-	private static void makeAudioCall(){
+	public static void makeAudioCall(){
 		PhoneCall phone = new PhoneCall(m_context);
 		phone.makeCall();
 	}
